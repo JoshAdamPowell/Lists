@@ -1,12 +1,17 @@
-export class List {
-    first: ListNode;
+export class DoubleList {
+    first: DoubleListNode;
+    last: DoubleListNode;
 
     add(value: string) {
         if (this.first == undefined) {
-            this.first = new ListNode(value);
+            this.first = new DoubleListNode(value);
+            this.last = this.first;
         } else {
             let final = this.findFinal();
-            final.nextNode = new ListNode(value);
+            let newNode = new DoubleListNode(value);
+            final.nextNode = newNode;
+            newNode.previousNode = final;
+            this.last = newNode
         }
     };
 
@@ -27,7 +32,7 @@ export class List {
         return null;
     }
 
-    remove(node: ListNode) {
+    remove(node: DoubleListNode) {
         let found = false;
         let thisNode = this.first;
         let nextNode = thisNode.nextNode;
@@ -81,28 +86,13 @@ export class List {
 }
 
 
-export class ListNode {
+export class DoubleListNode {
     value: string;
-    nextNode: ListNode | undefined;
+    nextNode: DoubleListNode | undefined;
+    previousNode: DoubleListNode | undefined;
 
     constructor(value: string) {
         this.value = value;
     }
 
 }
-
-function tests() {
-    let list = new List();
-    list.values()
-    list.add('blah');
-    list.add('bloo');
-    list.add('blee');
-    list.add('foo');
-
-    console.log(list.values());
-    list.remove(list.findNodeWithValue('blah'));
-    console.log(list.values())
-
-}
-
-tests();

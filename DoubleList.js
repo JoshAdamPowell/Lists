@@ -1,19 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var List = /** @class */ (function () {
-    function List() {
+var DoubleList = /** @class */ (function () {
+    function DoubleList() {
     }
-    List.prototype.add = function (value) {
+    DoubleList.prototype.add = function (value) {
         if (this.first == undefined) {
-            this.first = new ListNode(value);
+            this.first = new DoubleListNode(value);
+            this.last = this.first;
         }
         else {
             var final = this.findFinal();
-            final.nextNode = new ListNode(value);
+            var newNode = new DoubleListNode(value);
+            final.nextNode = newNode;
+            newNode.previousNode = final;
+            this.last = newNode;
         }
     };
     ;
-    List.prototype.findNodeWithValue = function (value) {
+    DoubleList.prototype.findNodeWithValue = function (value) {
         var thisNode = this.first;
         var next = thisNode.nextNode;
         while (thisNode != undefined) {
@@ -28,7 +32,7 @@ var List = /** @class */ (function () {
         }
         return null;
     };
-    List.prototype.remove = function (node) {
+    DoubleList.prototype.remove = function (node) {
         var found = false;
         var thisNode = this.first;
         var nextNode = thisNode.nextNode;
@@ -48,7 +52,7 @@ var List = /** @class */ (function () {
         }
         thisNode.nextNode = nextNode.nextNode;
     };
-    List.prototype.values = function () {
+    DoubleList.prototype.values = function () {
         var allValues = [];
         var thisNode = this.first;
         if (thisNode == undefined) {
@@ -68,7 +72,7 @@ var List = /** @class */ (function () {
         }
         return allValues;
     };
-    List.prototype.findFinal = function () {
+    DoubleList.prototype.findFinal = function () {
         var thisNode = this.first;
         var nextNode = thisNode.nextNode;
         while (nextNode != undefined) {
@@ -77,25 +81,13 @@ var List = /** @class */ (function () {
         }
         return thisNode;
     };
-    return List;
+    return DoubleList;
 }());
-exports.List = List;
-var ListNode = /** @class */ (function () {
-    function ListNode(value) {
+exports.DoubleList = DoubleList;
+var DoubleListNode = /** @class */ (function () {
+    function DoubleListNode(value) {
         this.value = value;
     }
-    return ListNode;
+    return DoubleListNode;
 }());
-exports.ListNode = ListNode;
-function tests() {
-    var list = new List();
-    list.values();
-    list.add('blah');
-    list.add('bloo');
-    list.add('blee');
-    list.add('foo');
-    console.log(list.values());
-    list.remove(list.findNodeWithValue('blah'));
-    console.log(list.values());
-}
-tests();
+exports.DoubleListNode = DoubleListNode;
